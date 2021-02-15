@@ -1,0 +1,14 @@
+*.xml
+*.iml
+*.pyc
+*.csv
+*.xlsx
+*.pt
+*.json
+*.model
+*.bin
+generate_valid.py
+requirements.txt
+env_question_generation/
+t5-fr-e2e-hl/
+wandb/
