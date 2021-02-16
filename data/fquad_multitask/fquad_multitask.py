@@ -169,7 +169,7 @@ def _generate_examples(filepath, qg_format):
                             yield count, process_qg_text(qg_format, context, question, qa["answers"][0])
                             count += 1
 
-fquad_generator = _generate_examples(os.path.join("data/", "train.json"), "highlight")
+fquad_generator = _generate_examples(os.path.join(args.path_to_data, "train.json"), "highlight")
 sources, targets, tasks = [], [], []
 elem = next(fquad_generator, None)
 while elem is not None:
