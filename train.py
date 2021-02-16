@@ -14,6 +14,7 @@ from transformers import (
     AutoModelForSeq2SeqLM,
     AutoTokenizer,
     T5Tokenizer,
+    MT5Tokenizer,
     BartTokenizer,
     HfArgumentParser,
     DataCollator,
@@ -26,13 +27,14 @@ from data_collator import T2TDataCollator
 
 MODEL_TYPE_TO_TOKENIZER = {
     "t5": T5Tokenizer,
+    "mt5": MT5Tokenizer,
     "bart": BartTokenizer,
 }
 
 
 logger = logging.getLogger(__name__)
 wandb.login()
-wandb.init(project="generation_question", name = "t5-fr-e2e-fquad")
+wandb.init(project="generation_question", name = "mt5-fr-e2e-fquad")
 
 
 torch.cuda.empty_cache()
@@ -46,7 +48,8 @@ class ModelArguments:
     model_name_or_path: str = field(
         metadata={"help": "Path to pretrained model or model identifier from huggingface.co/models"}
     )
-    model_type: str = field(metadata={"help": "One of 't5', 'bart'"})
+    model_type: str = field(metadata={"help": "One of 'mt5','t5', 'bart'"})
+    
     tokenizer_name_or_path: Optional[str] = field(
         default=None, metadata={"help": "Pretrained tokenizer name or path if not the same as model_name"}
     )
