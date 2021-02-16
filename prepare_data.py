@@ -6,7 +6,7 @@ import datasets
 
 import torch
 import nlp
-from transformers import MT5Tokenizer, T5Tokenizer, BartTokenizer, HfArgumentParser
+from transformers import T5Tokenizer, BartTokenizer, HfArgumentParser
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -177,7 +177,7 @@ def main():
     if data_args.model_type == 't5':
         tokenizer = T5Tokenizer.from_pretrained(data_args.model_name)
     elif data_args.model_type == 'mt5':
-        tokenizer = MT5Tokenizer.from_pretrained(data_args.model_name)
+        tokenizer = T5Tokenizer.from_pretrained(data_args.model_name)
     else:
         tokenizer = BartTokenizer.from_pretrained(data_args.model_name)
 
