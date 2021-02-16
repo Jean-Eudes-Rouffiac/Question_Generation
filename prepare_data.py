@@ -6,7 +6,7 @@ import datasets
 
 import torch
 import nlp
-from transformers import MT5Tokenizer, T5Tokenizer, BartTokenizer, HfArgumentParser
+from transformers import T5Tokenizer, BartTokenizer, HfArgumentParser
 import pandas as pd
 
 logger = logging.getLogger(__name__)
