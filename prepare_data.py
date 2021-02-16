@@ -6,7 +6,7 @@ import datasets
 
 import torch
 import nlp
-from transformers import T5Tokenizer, BartTokenizer, HfArgumentParser
+from transformers import MT5Tokenizer, T5Tokenizer, BartTokenizer, HfArgumentParser
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -83,12 +83,17 @@ class DataProcessor:
             self.sep_token = "<sep>"
         elif model_type == "bart":
             self.sep_token = "<sep>"
+        elif model_type == "mt5":
+            self.sep_token = "<sep>"
         else:
             self.sep_token = "[SEP]"
 
     def process(self, dataset):
         if self.model_type == "t5":
             dataset = dataset.map(self._add_eos_examples)
+        if self.model_type == "mt5":
+            dataset = dataset.map(self._add_eos_examples)
+
 
         dataset = dataset.map(self._add_special_tokens)
         dataset = dataset.map(self._convert_to_features, batched=True)
@@ -127,6 +132,8 @@ class DataProcessor:
             'target_ids': target_encoding['input_ids'],
             'attention_mask': source_encoding['attention_mask'],
         }
+
+        print(encodings)
 
         return encodings
 

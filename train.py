@@ -14,6 +14,7 @@ from transformers import (
     AutoModelForSeq2SeqLM,
     AutoTokenizer,
     T5Tokenizer,
+    MT5Tokenizer,
     BartTokenizer,
     HfArgumentParser,
     DataCollator,
@@ -26,6 +27,7 @@ from data_collator import T2TDataCollator
 
 MODEL_TYPE_TO_TOKENIZER = {
     "t5": T5Tokenizer,
+    "mt5": MT5Tokenizer,
     "bart": BartTokenizer,
 }
 
