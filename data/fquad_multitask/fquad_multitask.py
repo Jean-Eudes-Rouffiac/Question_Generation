@@ -31,7 +31,7 @@ import os
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("path_fquad_data", type=str, help="path to json files.")
+parser.add_argument("--path_to_data", type=str, help="path to json files.")
 
 args = parser.parse_args()
 
@@ -169,7 +169,7 @@ def _generate_examples(filepath, qg_format):
                             yield count, process_qg_text(qg_format, context, question, qa["answers"][0])
                             count += 1
 
-fquad_generator = _generate_examples(os.path.join(args.path_fquad_data, "train.json"), "highlight")
+fquad_generator = _generate_examples(os.path.join("data/", "train.json"), "highlight")
 sources, targets, tasks = [], [], []
 elem = next(fquad_generator, None)
 while elem is not None:
@@ -178,10 +178,10 @@ while elem is not None:
     tasks.append(elem[1]['task'])
     elem = next(fquad_generator, None)
 df_train_fquad = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
-df_train_fquad.to_csv("fquad_train.csv")
+df_train_fquad.to_csv("train.csv")
 
 
-fquad_generator = _generate_examples(os.path.join(args.path_fquad_data, "valid.json"), "highlight")
+fquad_generator = _generate_examples(os.path.join("data/", "valid.json"), "highlight")
 sources, targets, tasks = [], [], []
 elem = next(fquad_generator, None)
 while elem is not None:
@@ -190,4 +190,4 @@ while elem is not None:
     tasks.append(elem[1]['task'])
     elem = next(fquad_generator, None)
 df_valid = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
-df_valid.to_csv("fquad_valid.csv")
+df_valid.to_csv("valid.csv")

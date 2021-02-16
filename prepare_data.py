@@ -27,9 +27,17 @@ class DataTrainingArguments:
     )
     train_file_name: Optional[str] = field(
         default=None,
-        metadata={"help": "name for cached train dataset"},
+        metadata={"help": "name for dataset train csv file"},
     )
     valid_file_name: Optional[str] = field(
+        default=None,
+        metadata={"help": "name for valid csv file"},
+    )
+    train_file_name_cache: Optional[str] = field(
+        default=None,
+        metadata={"help": "name for cached train dataset"},
+    )
+    valid_file_name_cache: Optional[str] = field(
         default=None,
         metadata={"help": "name for cached valid dataset"},
     )
@@ -196,8 +204,8 @@ def main():
     train_dataset.set_format(type='torch', columns=columns)
     valid_dataset.set_format(type='torch', columns=columns)
 
-    train_path = os.path.join("data/train_data_e2e_qg_t5.pt")
-    valid_path = os.path.join("data/valid_data_e2e_qg_t5.pt")
+    train_path = os.path.join(data_args.dataset_path, data_args.train_file_name_cache)
+    valid_path = os.path.join(data_args.dataset_path, data_args.valid_file_name_cache)
 
     torch.save(train_dataset, train_path)
     logger.info(f"saved train dataset at {train_path}")
