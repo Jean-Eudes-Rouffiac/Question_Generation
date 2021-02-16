@@ -178,10 +178,10 @@ while elem is not None:
     tasks.append(elem[1]['task'])
     elem = next(fquad_generator, None)
 df_train_fquad = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
-df_train_fquad.to_csv("train.csv")
+df_train_fquad.to_csv("data/train.csv")
 
 
-fquad_generator = _generate_examples(os.path.join("data/", "valid.json"), "highlight")
+fquad_generator = _generate_examples(os.path.join(args.path_to_data, "valid.json"), "highlight")
 sources, targets, tasks = [], [], []
 elem = next(fquad_generator, None)
 while elem is not None:
@@ -190,4 +190,4 @@ while elem is not None:
     tasks.append(elem[1]['task'])
     elem = next(fquad_generator, None)
 df_valid = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
-df_valid.to_csv("valid.csv")
+df_valid.to_csv("data/valid.csv")
