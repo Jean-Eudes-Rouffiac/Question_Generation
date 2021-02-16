@@ -34,8 +34,11 @@ parser.add_argument("--file_name", help="name of the output csv file that will b
 parser.add_argument("--checkpoint_path", help='name or path of where to find the checkpoint folder', type=str, default=None, action="store")
 parser.add_argument("--tokenizer_name_or_path", help='name or path of where to find the tokenizer', type=str, default='t5_qg_tokenizer', action="store")
 # Optional arguments
+parser.add_argument("--output_dir_eval", help="name of the directory where to export the eval generated questions", default=None, type=str)
+parser.add_argument("--file_name_eval", help="name of the eval output txt file that will be saved", default=None, type=str)
+parser.add_argument("--do_eval", help='generate a .txt file for valid predictions', type=bool , default=False, action="store")
 parser.add_argument("--max_length_input", help="max length of input sequence, default 256", type=int, default=512, action="store")
-parser.add_argument("--max_length_output", help="max_length of output sequence, defaut 50", type=int, default=50, action="store")
+parser.add_argument("--max_length_output", help="max_length of output sequence, defaut 32", type=int, default=32, action="store")
 parser.add_argument("--batch_size", help="batch size for training, default 16", type=int, default=16, action='store')
 parser.add_argument("--repetition_penalty", help='repetition penalty parameter for generation, default 2', type=float, default=2.0, action="store")
 parser.add_argument("--length_penalty", help='length penalty parameter for generation, default 2', type=float, default=2.0, action="store")
@@ -109,26 +112,39 @@ def main(args_file=None):
             generation_hyperparameters["attention_mask"] = attention_mask
             batch_generated_tokens = model.generate(**generation_hyperparameters)
             batch_generated_questions = tokenizer.batch_decode(batch_generated_tokens)
-            for j in range(len(batch_generated_questions)):
-                final_generated = []
-                generated_without_space = []
-                generated = re.split("<[^<]*>", batch_generated_questions[j])
-                for l in generated :
-                    if len(l)>0:
-                        generated_without_space.append(l.strip())
-                for m in generated_without_space:
-                    if len(m)>0:
-                        if m[-1]== "?":
-                            final_generated.append(m)
-                batch_generated_questions[j] = list(set(final_generated))
-            generated_questions += batch_generated_questions
 
-    # SAVING
-    dict_to_save = {}
-    if not os.path.exists(args.output_dir):
-        os.makedirs(args.output_dir)
-    df_ = pd.DataFrame({"context": contexts, "questions": generated_questions})
-    df_.to_excel(os.path.join(args.output_dir, args.file_name)+ ".xlsx", index = False , encoding="utf-8")
+            if args.do_eval :
+                for j in range(len(batch_generated_questions)):
+                    generated = re.split("<[^<]*>", batch_generated_questions[j])[0]
+                    batch_generated_questions[j] = generated
+                generated_questions += batch_generated_questions
+
+                # SAVING
+                if not os.path.exists(args.output_dir_eval):
+                    os.makedirs(args.output_dir_eval)
+                with open(os.path.join(args.output_dir_eval, args.file_name_eval)+ ".txt", 'w') as f:
+                    f.write("\n".join(generated_questions))
+            else:
+                for j in range(len(batch_generated_questions)):
+                    final_generated = []
+                    generated_without_space = []
+                    generated = re.split("<[^<]*>", batch_generated_questions[j])
+                    for l in generated :
+                        if len(l)>0:
+                            generated_without_space.append(l.strip())
+                    for m in generated_without_space:
+                        if len(m)>0:
+                            if m[-1]== "?":
+                                final_generated.append(m)
+                    batch_generated_questions[j] = list(set(final_generated))
+                generated_questions += batch_generated_questions
+
+                # SAVING
+                dict_to_save = {}
+                if not os.path.exists(args.output_dir):
+                    os.makedirs(args.output_dir)
+                df_ = pd.DataFrame({"context": contexts, "questions": generated_questions})
+                df_.to_excel(os.path.join(args.output_dir, args.file_name)+ ".xlsx", index = False , encoding="utf-8")
 
 
 def run_generate(args_dict):
