@@ -133,8 +133,6 @@ class DataProcessor:
             'attention_mask': source_encoding['attention_mask'],
         }
 
-        print(encodings)
-
         return encodings
 
 

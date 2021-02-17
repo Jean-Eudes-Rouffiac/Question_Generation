@@ -30,18 +30,19 @@ class T2TDataCollator():
         Returns:
             A dictionary of tensors
         """
+        
         input_ids = torch.stack([example['source_ids'] for example in batch])
         target_ids = torch.stack([example['target_ids'] for example in batch])
         attention_mask = torch.stack([example['attention_mask'] for example in batch])
 
         pad_token_id = self.tokenizer.pad_token_id
-        
+
         # don't trim on tpu, for some reason trimming leads to slower training on TPU
         if not self.using_tpu:
           input_ids, attention_mask = trim_batch(input_ids, pad_token_id, attention_mask=attention_mask)
           target_ids = trim_batch(target_ids, pad_token_id)
-        
-        if self.model_type == "t5":
+
+        if self.model_type == "t5" or self.model_type == "mt5":
           lm_labels = target_ids.clone()
           decoder_input_ids = None
           if self.mode == 'training':
@@ -53,12 +54,12 @@ class T2TDataCollator():
             lm_labels[target_ids[:, 1:] == pad_token_id] = -100
 
         params =  {
-            "input_ids": input_ids, 
+            "input_ids": input_ids,
             "attention_mask": attention_mask,
-            "labels": lm_labels, 
+            "labels": lm_labels,
         }
 
         if decoder_input_ids is not None:
           params["decoder_input_ids"] = decoder_input_ids
-        
+
         return params
