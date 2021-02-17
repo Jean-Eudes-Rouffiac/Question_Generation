@@ -178,8 +178,20 @@ while elem is not None:
     tasks.append(elem[1]['task'])
     elem = next(fquad_generator, None)
 df_train_fquad = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
-df_train_fquad.to_csv("data/train.csv")
 
+fquad_generator = _generate_examples(os.path.join(args.path_piaf_data, "piaf-v1.1.json"), "highlight")
+sources, targets, tasks = [], [], []
+elem = next(fquad_generator, None)
+while elem is not None:
+    sources.append(elem[1]['source_text'])
+    targets.append(elem[1]['target_text'])
+    tasks.append(elem[1]['task'])
+    elem = next(fquad_generator, None)
+df_train_piaf = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
+
+df_mix = pd.concat([df_train_fquad, df_train_piaf])
+df_mix = df_mix.reset_index(drop=True)
+df_mix.to_csv("data/train.csv")
 
 fquad_generator = _generate_examples(os.path.join(args.path_to_data, "valid.json"), "highlight")
 sources, targets, tasks = [], [], []
