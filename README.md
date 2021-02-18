@@ -2,9 +2,9 @@
 
 L'objectif de ce projet est de générer automatiquement des questions à partir de contextes. Le modèle utilisé est est un Text-to-Text Transfer Transformer (T5) développé par Google. Il a été entraîné sur un large Data Set (C4) et peut être fine tuné rapidement et facilement pour n'importe quelle tâche de Text-to-Text (summarization, question answering, question generation ...). Pour utiliser des données textuelles en français, le modèle [t5-base-multi-fr-wiki-news](https://huggingface.co/airKlizz/t5-base-multi-fr-wiki-news) est utilisé. On peut alors utiliser ce modèle pré entraîné dans n'importe quelle tâche de textto-text avec du vocabulaire français. Repo basé et adapté à partir de Suraj Patil (https://github.com/patil-suraj/question_generation) et Joachim Dublineau (https://github.com/joachim-dublineau).
 
-Pour plus d'informations concernant les transformers : [Attention is all you need](https://arxiv.org/pdf/1706.03762.pdf).
-Article présentant le modèle T5 : [Exploring the Limits of Transfer Learning with a UnifiedText-to-Text Transformer](https://arxiv.org/pdf/1910.10683.pdf).
-Autre article très intéressant sur la génération de questions : [Transformer-based End-to-End Question Generation](https://arxiv.org/pdf/2005.01107v1.pdf).
+Pour plus d'informations concernant les transformers : [Attention is all you need](https://arxiv.org/pdf/1706.03762.pdf).  
+Article présentant le modèle T5 : [Exploring the Limits of Transfer Learning with a UnifiedText-to-Text Transformer](https://arxiv.org/pdf/1910.10683.pdf).  
+Autre article très intéressant sur la génération de questions : [Transformer-based End-to-End Question Generation](https://arxiv.org/pdf/2005.01107v1.pdf).  
 
 ## Entraînement avec FQUAD et PIAD
 
