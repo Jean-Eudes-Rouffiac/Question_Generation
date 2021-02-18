@@ -6,7 +6,7 @@ Pour plus d'informations concernant les transformers : [Attention is all you nee
 Article présentant le modèle T5 : [Exploring the Limits of Transfer Learning with a UnifiedText-to-Text Transformer](https://arxiv.org/pdf/1910.10683.pdf).  
 Autre article très intéressant sur la génération de questions : [Transformer-based End-to-End Question Generation](https://arxiv.org/pdf/2005.01107v1.pdf).  
 
-## Entraînement avec FQUAD et PIAD
+## Entraînement avec FQUAD et PIAF
 
 ### Génération des data sets train et valid 
 
