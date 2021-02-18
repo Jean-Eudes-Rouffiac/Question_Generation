@@ -8,14 +8,14 @@ Autre article très intéressant sur la génération de questions : [Transformer
 
 ## Entraînement avec FQUAD et PIAF
 
-### Génération des data sets train et valid 
+### Génération des data sets train et valid
 
 ```bash
-python data/fquad_multitask/fquad_multitask.py --path_to_data data/fquad_multitask/
+python data/generate_dataset/generate_dataset.py --path_to_data data/generate_dataset/
 ```
 
 ### Data preprocessing
- 
+
 ```bash
 python prepare_data.py --task e2e_qg --valid_for_qg_only --model_type t5 --dataset_path data/ \
 --qg_format highlight_qg_format --max_source_length 512 --max_target_length 32 --train_file_name train.csv \
@@ -39,7 +39,7 @@ python train.py --model_name_or_path airKlizz/t5-base-multi-fr-wiki-news --model
 
 ```bash
 python generate.py  --file_data clean_fquad_valid_for_generate.csv --output_dir results --file_name question_generation_predictions \
---checkpoint_path t5-fr-e2e-hl/run0 --tokenizer_name_or_path t5_qg_tokenizer 
+--checkpoint_path t5-fr-e2e-hl/run0 --tokenizer_name_or_path t5_qg_tokenizer
 ```
 
 ## Credits:

@@ -33,7 +33,7 @@ MODEL_TYPE_TO_TOKENIZER = {
 
 logger = logging.getLogger(__name__)
 wandb.login()
-wandb.init(project="train_generation_question", name = "t5-fr-e2e-fquad-piaf")
+wandb.init(project="train_generation_question", name = "t5-fr-question-generation", entity="jedrouffiac")
 
 
 torch.cuda.empty_cache()
