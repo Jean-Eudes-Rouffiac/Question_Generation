@@ -136,7 +136,7 @@ def main(args_file=None):
     set_seed(training_args.seed)
 
     # Set project name
-    os.environ["WANDB_PROJECT"] = "generation_question"
+    os.environ["WANDB_PROJECT"] = "train_generation_question"
     os.environ["WANDB_WATCH"] = "all"
 
     # Load pretrained model and tokenizer
