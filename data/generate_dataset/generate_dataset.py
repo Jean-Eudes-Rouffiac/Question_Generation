@@ -76,7 +76,7 @@ while elem is not None:
     elem = next(fquad_generator, None)
 df_train_fquad = pd.DataFrame({"source_text": sources, 'target_text': targets, "task": tasks})
 
-piaf_generator = _generate_examples(os.path.join(args.path_piaf_data, "piaf-v1.1.json"), "highlight")
+piaf_generator = _generate_examples(os.path.join(args.path_to_data, "piaf-v1.1.json"), "highlight")
 sources, targets, tasks = [], [], []
 elem = next(piaf_generator, None)
 while elem is not None:
